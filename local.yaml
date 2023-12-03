@@ -1,8 +1,44 @@
 - hosts: localhost
+  vars:
+    dotfiles_dir: "{{ playbook_dir }}/.dotfiles"
   tasks:
-    - include: tasks/git.yaml
-    # - include: tasks/ssh.yaml
-    - include: tasks/terminal.yaml
-    - include: tasks/vim.yaml
-    - include: tasks/zsh.yaml
-    - include: tasks/node.yaml
+    - ansible.builtin.include_tasks:
+        file: tasks/git.yaml
+      vars:
+        config:
+          src: "{{ dotfiles_dir }}/.gitconfig"
+          dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.gitconfig"
+      tags:
+        - git
+    - ansible.builtin.include_tasks:
+        file: tasks/ssh.yaml
+      vars:
+        ssh:
+          src: "{{ dotfiles_dir }}/.ssh/id_ed25519"
+          dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.ssh/id_ed25519"
+      tags:
+        - ssh
+    - ansible.builtin.include_tasks:
+        file: tasks/terminal.yaml
+      tags:
+        - terminal
+    - ansible.builtin.include_tasks:
+        file: tasks/vim.yaml
+      vars:
+        config:
+          src: "{{ dotfiles_dir }}/.vimrc"
+          dest: "{{ lookup('ansible.builtin.env', 'HOME' }}/.vimrc"
+      tags:
+        - vim
+    - ansible.builtin.include_tasks:
+        file: tasks/zsh.yaml
+      vars:
+        config:
+          src: "{{ dotfiles_dir }}/.zshrc"
+          dest: "{{ lookup('ansible.builtin.env', 'HOME' }}/.zshrc"
+      tags:
+        - zsh
+    - ansible.builtin.include_tasks:
+        file: tasks/node.yaml
+      tags:
+        - node

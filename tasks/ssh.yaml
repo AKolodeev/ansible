@@ -1,3 +1,29 @@
-- name: Copy SSH key
+- name: Ensure .ssh directory exists
+  ansible.builtin.file:
+    dest: "{{ ssh.dest | dirname }}"
+    mode: 0700
+    state: directory
+  tags:
+    - ssh
+- name: Install private SSH key
+  ansible.builtin.copy:
+    src: "{{ ssh.src }}"
+    dest: "{{ ssh.dest }}"
+    mode: 0600
+  tags:
+    - ssh
+    - dotfiles
+- name: Generate public SSH key
+  community.crypto.openssh_keypair:
+    path: "{{ ssh.dest }}"
+    type: ed25519
+  register: ssh_keygen
+  tags:
+    - ssh
+- name: Set authorized key
+  ansible.posix.authorized_key:
+    user: "{{ lookup('ansible.builtin.env', 'USER') }}"
+    state: present
+    key: "{{ lookup('file', '{{ ssh.dest }}.pub') }}"
   tags:
     - ssh

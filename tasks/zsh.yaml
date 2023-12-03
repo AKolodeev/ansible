@@ -26,10 +26,10 @@
 # ToDo: use .dotfiles repo
 - name: Link .zshrc
   ansible.builtin.file:
-    src: "{{ playbook_dir }}/.zshrc"
-    dest: "{{ ansible_env.HOME }}/.zshrc"
+    src: "{{ config.src }}"
+    dest: "{{ config.dest }}"
     state: link
     force: true
   tags:
     - zsh
-    - link
+    - dotfiles
