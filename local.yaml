@@ -1,0 +1,8 @@
+- hosts: localhost
+  tasks:
+    - include: tasks/git.yaml
+    # - include: tasks/ssh.yaml
+    - include: tasks/terminal.yaml
+    - include: tasks/vim.yaml
+    - include: tasks/zsh.yaml
+    - include: tasks/node.yaml

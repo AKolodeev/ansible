@@ -1,0 +1,16 @@
+- name: Install Git
+  community.general.homebrew:
+    name: git
+    state: present
+  tags:
+    - git
+# ToDo: use .dotfiles repo
+- name: Link .gitconfig
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/.gitconfig"
+    dest: "{{ ansible_env.HOME }}/.gitconfig"
+    state: link
+    force: true
+  tags:
+    - git
+    - link

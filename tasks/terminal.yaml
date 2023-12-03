@@ -1,0 +1,8 @@
+- name: Install iTerm2
+  community.general.homebrew:
+    name: iterm2
+    state: present
+    install_options: cask
+  tags:
+    - vim # ayu theme does not work in the built-in MacOS terminal
+    - iTerm

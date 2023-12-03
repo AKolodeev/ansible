@@ -1,0 +1,3 @@
+- name: Copy SSH key
+  tags:
+    - ssh

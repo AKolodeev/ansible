@@ -1,0 +1,35 @@
+- name: Install zsh
+  community.general.homebrew:
+    name: zsh
+    state: present
+  tags:
+    - zsh
+- name: Fetch Oh My Zsh installation script
+  ansible.builtin.uri:
+    url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+    return_content: true
+  register: oh_my_zsh
+  when: lookup('ansible.builtin.env', 'ZSH') is undefined
+  tags:
+    - zsh
+- name: Install Oh My Zsh
+  ansible.builtin.shell: "{{ oh_my_zsh.content }}"
+  when: lookup('ansible.builtin.env', 'ZSH') is undefined
+  tags:
+    - zsh
+- name: Install Zsh Autosuggestions
+  ansible.builtin.git:
+    repo: https://github.com/zsh-users/zsh-autosuggestions
+    dest: "{{ lookup('ansible.builtin.env', 'ZSH') }}/custom/plugins/zsh-autosuggestions"
+  tags:
+    - zsh 
+# ToDo: use .dotfiles repo
+- name: Link .zshrc
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/.zshrc"
+    dest: "{{ ansible_env.HOME }}/.zshrc"
+    state: link
+    force: true
+  tags:
+    - zsh
+    - link
