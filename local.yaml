@@ -42,3 +42,10 @@
         file: tasks/node.yaml
       tags:
         - node
+    - ansible.builtin.include_tasks:
+        file: tasks/python.yaml
+      vars:
+        version: "3.11"
+        oh_my_zsh_custom_path: "{{ lookup('ansible.builtin.env', 'HOME') }}/.oh-my-zsh/custom"
+      tags:
+        - python
