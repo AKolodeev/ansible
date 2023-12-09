@@ -22,4 +22,4 @@ ansible-playbook local.yaml --ask-vault-pass
 ## Improvements:
 
 1. Use `ansible-pull` instead
-
+2. Install [Chrome](https://formulae.brew.sh/cask/google-chrome) and [Slack](https://formulae.brew.sh/cask/slack)

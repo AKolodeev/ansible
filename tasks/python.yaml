@@ -1,0 +1,49 @@
+- name: Install Python
+  community.general.homebrew:
+    name: "python@{{ version }}"
+    state: present
+  tags:
+    - python
+- name: Instal pipx
+  community.general.homebrew:
+    name: pipx
+    state: present
+  tags:
+    - python
+    - pipx
+- name: Ensure pipx paths
+  ansible.builtin.shell: pipx ensurepath
+  tags:
+    - python
+    - pipx
+- name: Enable pipx shell completions
+  ansible.builtin.shell: pipx completions
+  tags:
+    - python
+    - pipx
+- name: Install poetry
+  community.general.pipx:
+    name: poetry
+    state: present
+    executable: /opt/homebrew/bin/pipx
+  tags:
+    - python
+    - poetry
+- name: Enable poetry shell completions
+  block:
+    - name: Ensure poetry plugin directory exists
+      ansible.builtin.file:
+        path: "{{ oh_my_zsh_custom_path }}/plugins/poetry"
+        state: directory
+      register: poetry_plugin_dir
+    - name: Ensure oh-my-zsh plugin file exists
+      ansible.builtin.file:
+        path: "{{ poetry_plugin_dir.path }}/_poetry"
+        state: touch
+      register: poetry_plugin_file
+    - name: Get completion content
+      ansible.builtin.shell: |
+        poetry completions zsh > "{{ poetry_plugin_file.dest }}"
+  tags:
+    - python
+    - poetry
