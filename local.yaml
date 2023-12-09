@@ -27,7 +27,7 @@
       vars:
         config:
           src: "{{ dotfiles_dir }}/.vimrc"
-          dest: "{{ lookup('ansible.builtin.env', 'HOME' }}/.vimrc"
+          dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.vimrc"
       tags:
         - vim
     - ansible.builtin.include_tasks:
