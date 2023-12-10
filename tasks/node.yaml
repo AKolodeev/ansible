@@ -17,3 +17,11 @@
   ansible.builtin.shell: source "{{ lookup('ansible.builtin.env', 'HOME') }}/.nvm/nvm.sh" && nvm install --lts
   tags:
     - node
+- name: Install Yarn
+  community.general.npm:
+    name: yarn
+    global: true
+    state: present
+  tags:
+    - node
+    - yarn
