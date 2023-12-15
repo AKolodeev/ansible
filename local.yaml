@@ -29,7 +29,8 @@
       vars:
         config:
           src: "{{ dotfiles_dir }}/.zshrc"
-          dest: "{{ lookup('ansible.builtin.env', 'HOME' }}/.zshrc"
+          dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.zshrc"
+        oh_my_zsh_custom_path: "{{ lookup('ansible.builtin.env', 'HOME') }}/.oh-my-zsh/custom"
     - ansible.builtin.import_tasks:
         file: tasks/node.yaml
     - ansible.builtin.import_tasks:
@@ -37,3 +38,5 @@
       vars:
         version: "3.11"
         oh_my_zsh_custom_path: "{{ lookup('ansible.builtin.env', 'HOME') }}/.oh-my-zsh/custom"
+    - ansible.builtin.import_tasks:
+        file: tasks/docker.yaml
