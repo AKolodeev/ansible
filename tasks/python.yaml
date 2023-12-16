@@ -12,12 +12,12 @@
     - python
     - pipx
 - name: Ensure pipx paths
-  ansible.builtin.shell: pipx ensurepath
+  ansible.builtin.command: pipx ensurepath
   tags:
     - python
     - pipx
 - name: Enable pipx shell completions
-  ansible.builtin.shell: pipx completions
+  ansible.builtin.command: pipx completions
   tags:
     - python
     - pipx
@@ -30,20 +30,22 @@
     - python
     - poetry
 - name: Enable poetry shell completions
+  tags:
+    - python
+    - poetry
   block:
     - name: Ensure poetry plugin directory exists
       ansible.builtin.file:
         path: "{{ oh_my_zsh_custom_path }}/plugins/poetry"
         state: directory
+        mode: "0644"
       register: poetry_plugin_dir
     - name: Ensure oh-my-zsh plugin file exists
       ansible.builtin.file:
         path: "{{ poetry_plugin_dir.path }}/_poetry"
         state: touch
+        mode: "0644"
       register: poetry_plugin_file
     - name: Get completion content
       ansible.builtin.shell: |
         poetry completions zsh > "{{ poetry_plugin_file.dest }}"
-  tags:
-    - python
-    - poetry

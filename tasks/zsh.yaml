@@ -17,9 +17,11 @@
   when: lookup('ansible.builtin.env', 'ZSH') is undefined
   tags:
     - zsh
+    - skip_ansible_lint
 - name: Install Zsh Autosuggestions
   ansible.builtin.git:
     repo: https://github.com/zsh-users/zsh-autosuggestions
+    version: v0.7.0
     dest: "{{ oh_my_zsh_custom_path }}/plugins/zsh-autosuggestions"
   tags:
     - zsh
