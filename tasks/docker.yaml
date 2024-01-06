@@ -4,3 +4,24 @@
     state: present
   tags:
     - docker
+- name: Install Docker Compose
+  community.general.homebrew:
+    name: docker-compose
+    state: present
+  tags:
+    - docker
+- name: Install compose as docker plugin
+  tags:
+    - docker
+  block:
+    - name: Ensure dirs
+      ansible.builtin.file:
+        path: "{{ lookup('ansible.builtin.env', 'HOME') }}/.docker/cli-plugins"
+        state: directory
+        mode: "0700"
+    - name: Symlink
+      ansible.builtin.file:
+        src: "{{ lookup('ansible.builtin.env', 'HOMEBREW_PREFIX') }}/opt/docker-compose/bin/docker-compose"
+        dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.docker/cli-plugins/docker-compose"
+        state: link
+        force: true
