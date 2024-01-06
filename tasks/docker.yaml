@@ -11,6 +11,8 @@
   tags:
     - docker
 - name: Install compose as docker plugin
+  tags:
+    - docker
   block:
     - name: Ensure dirs
       ansible.builtin.file:
@@ -23,5 +25,3 @@
         dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.docker/cli-plugins/docker-compose"
         state: link
         force: true
-  tags:
-    - docker
