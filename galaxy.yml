@@ -1,0 +1,16 @@
+namespace: "akolodeev_ansible"
+name: "akolodeev_ansible"
+description: "Prepares a (new) laptop for productive work"
+version: "1.0.9"
+readme: "README.md"
+authors:
+  - Aleksandr Kolodeev <alexkolodeev@gmail.com>
+dependencies:
+  "community.general": ">=7.0.0"
+  "community.crypto": ">=2.16.0"
+  "ansible.posix": ">=1.5.0"
+license:
+  - "MIT"
+repository: "https://github.com/AKolodeev/ansible"
+tags:
+  - tools

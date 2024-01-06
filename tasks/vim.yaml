@@ -8,6 +8,7 @@
   ansible.builtin.file:
     path: "{{ lookup('ansible.builtin.env', 'HOME') }}/.vim/autoload"
     state: directory
+    mode: "0644"
   tags:
     - vim
 - name: Install vim-plug
@@ -27,6 +28,9 @@
     - vim
     - dotfiles
 - name: Install YCM
+  tags:
+    - vim
+    - autocomplete
   block:
     - name: Install CMake
       community.general.homebrew:
@@ -37,9 +41,6 @@
         name: mono
         state: present
     - name: Compile YCM
-      ansible.builtin.shell:
+      ansible.builtin.command:
         chdir: "{{ lookup('ansible.builtin.env', 'HOME') }}/.vim/plugged/YouCompleteMe"
         cmd: python3 install.py --ts-completer
-  tags:
-    - vim
-    - autocomplete

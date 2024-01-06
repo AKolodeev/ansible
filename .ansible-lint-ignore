@@ -1,0 +1,8 @@
+tasks/docker.yaml no-changed-when
+tasks/git.yaml no-changed-when
+tasks/node.yaml no-changed-when
+tasks/python.yaml no-changed-when
+tasks/ssh.yaml no-changed-when
+tasks/terminal.yaml no-changed-when
+tasks/vim.yaml no-changed-when
+tasks/zsh.yaml no-changed-when

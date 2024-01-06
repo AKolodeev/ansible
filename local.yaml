@@ -1,39 +1,51 @@
-- hosts: localhost
+- name: Prepare local environment
+  hosts: localhost
   vars:
     dotfiles_dir: "{{ playbook_dir }}/.dotfiles"
   tasks:
-    - ansible.builtin.import_tasks:
+    - name: Setup Git
+      ansible.builtin.import_tasks:
         file: tasks/git.yaml
       vars:
         config:
           src: "{{ dotfiles_dir }}/.gitconfig"
           dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.gitconfig"
-    - ansible.builtin.import_tasks:
+    - name: Setup SSH key
+      ansible.builtin.import_tasks:
         file: tasks/ssh.yaml
       vars:
         ssh:
           src: "{{ dotfiles_dir }}/.ssh/id_ed25519"
           dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.ssh/id_ed25519"
-    - ansible.builtin.import_tasks:
+    - name: Setup Terminal
+      ansible.builtin.import_tasks:
         file: tasks/terminal.yaml
       tags:
         - terminal
-    - ansible.builtin.import_tasks:
+    - name: Setup Vim
+      ansible.builtin.import_tasks:
         file: tasks/vim.yaml
       vars:
         config:
           src: "{{ dotfiles_dir }}/.vimrc"
           dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.vimrc"
-    - ansible.builtin.import_tasks:
+    - name: Setup Zsh
+      ansible.builtin.import_tasks:
         file: tasks/zsh.yaml
       vars:
         config:
           src: "{{ dotfiles_dir }}/.zshrc"
-          dest: "{{ lookup('ansible.builtin.env', 'HOME' }}/.zshrc"
-    - ansible.builtin.import_tasks:
+          dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.zshrc"
+        oh_my_zsh_custom_path: "{{ lookup('ansible.builtin.env', 'HOME') }}/.oh-my-zsh/custom"
+    - name: Setup Node
+      ansible.builtin.import_tasks:
         file: tasks/node.yaml
-    - ansible.builtin.import_tasks:
+    - name: Setup Python
+      ansible.builtin.import_tasks:
         file: tasks/python.yaml
       vars:
         version: "3.11"
         oh_my_zsh_custom_path: "{{ lookup('ansible.builtin.env', 'HOME') }}/.oh-my-zsh/custom"
+    - name: Setup Docker
+      ansible.builtin.import_tasks:
+        file: tasks/docker.yaml
