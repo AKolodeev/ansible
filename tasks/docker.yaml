@@ -1,6 +1,6 @@
-- name: Install Docker
+- name: Install Colima with Docker runtime
   community.general.homebrew:
-    name: docker
+    name: [colima, docker]
     state: present
   tags:
     - docker
