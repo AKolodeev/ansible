@@ -25,7 +25,7 @@
   community.general.pipx:
     name: poetry
     state: present
-    executable: /opt/homebrew/bin/pipx
+    executable: "{{ lookup('ansible.builtin.env', 'HOMEBREW_PREFIX') }}/bin/pipx"
   tags:
     - python
     - poetry
@@ -38,7 +38,7 @@
       ansible.builtin.file:
         path: "{{ oh_my_zsh_custom_path }}/plugins/poetry"
         state: directory
-        mode: "0644"
+        mode: "0700"
       register: poetry_plugin_dir
     - name: Ensure oh-my-zsh plugin file exists
       ansible.builtin.file:
