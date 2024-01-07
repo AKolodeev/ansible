@@ -7,7 +7,7 @@
 - name: Install Oh My Zsh
   tags:
     - zsh
-    - skip_ansible_lint
+  when: lookup('ansible.builtin.env', 'ZSH') is undefined
   block:
     - name: Fetch the script
       ansible.builtin.uri:
@@ -16,7 +16,8 @@
       register: oh_my_zsh
     - name: Install Oh My Zsh
       ansible.builtin.shell: "{{ oh_my_zsh.content }}"
-  when: lookup('ansible.builtin.env', 'ZSH') is undefined
+      tags:
+        - skip_ansible_lint
 - name: Install Zsh Autosuggestions
   ansible.builtin.git:
     repo: https://github.com/zsh-users/zsh-autosuggestions
