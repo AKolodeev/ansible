@@ -8,3 +8,5 @@ set -Eeuo pipefail
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
 brew install ansible
+
+ANSIBLE_ASK_VAULT_PASS=True /opt/homebrew/bin/ansible-pull --ask-vault-password -U https://github.com/AKolodeev/ansible
