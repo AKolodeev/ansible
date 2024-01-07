@@ -8,7 +8,7 @@
   ansible.builtin.file:
     path: "{{ lookup('ansible.builtin.env', 'HOME') }}/.vim/autoload"
     state: directory
-    mode: "0644"
+    mode: "0700"
   tags:
     - vim
 - name: Install vim-plug
@@ -34,11 +34,7 @@
   block:
     - name: Install CMake
       community.general.homebrew:
-        name: cmake
-        state: present
-    - name: Install Mono
-      community.general.homebrew:
-        name: mono
+        name: [cmake, mono]
         state: present
     - name: Compile YCM
       ansible.builtin.command:

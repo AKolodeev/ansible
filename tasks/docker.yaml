@@ -25,3 +25,7 @@
         dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.docker/cli-plugins/docker-compose"
         state: link
         force: true
+- name: Start colima
+  ansible.builtin.command: colima start
+  tags:
+    - docker

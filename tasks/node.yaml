@@ -14,7 +14,7 @@
     - skip_ansible_lint
 - name: Install Node
   args:
-    executable: /bin/bash
+    executable: /bin/zsh
   ansible.builtin.shell: source "{{ lookup('ansible.builtin.env', 'HOME') }}/.nvm/nvm.sh" && nvm install --lts
   tags:
     - node
